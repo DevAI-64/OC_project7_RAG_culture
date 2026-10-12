@@ -1,0 +1,65 @@
+
+[project]
+name = "project7"
+version = "0.1.0"
+description = "Ingestion OpenAgenda et RAG pour les événements de Pau"
+readme = "README.md"
+requires-python = ">=3.14"
+
+dependencies = [
+    "bs4>=0.0.2",
+    "faiss-cpu>=1.15.1",
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "langchain-community>=0.4.2",
+    "langchain-core>=1.6.3",
+    "langchain-mistralai>=1.1.6",
+    "mistralai>=1,<2",
+    "python-dotenv>=1.2.3",
+    "uvicorn[standard]>=0.53.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.0.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.8",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py314"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # import sorting (isort via Ruff)
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.14"
+disallow_untyped_defs = true
+warn_return_any = true
+warn_unused_configs = true
+disable_error_code = ["import-untyped"]
+exclude = ["tests/"]
+
+[tool.uv]
+package = false
