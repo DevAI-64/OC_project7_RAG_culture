@@ -29,13 +29,37 @@ def make_answerer(catalog):
 
 
 def test_answer_uses_semantic_retrieval_when_theme_exists() -> None:
-    catalog = [{"metadata": {"first_date": "2026-10-01", "last_date": "2026-10-01", "uid": "1"}, "page_content": "photo"}]
-    assert make_answerer(catalog).answer("activité photo en octobre") == "activité photo en octobre: 1"
+    catalog = [
+        {
+            "metadata": {
+                "first_date": "2026-10-01",
+                "last_date": "2026-10-01",
+                "uid": "1",
+            },
+            "page_content": "photo",
+        }
+    ]
+    assert (
+        make_answerer(catalog).answer("activité photo en octobre")
+        == "activité photo en octobre: 1"
+    )
 
 
 def test_answer_uses_filtered_documents_for_generic_query() -> None:
-    catalog = [{"metadata": {"first_date": "2026-10-01", "last_date": "2026-10-01", "uid": "1"}, "page_content": "événement"}]
-    assert make_answerer(catalog).answer("Quels événements sont prévus en octobre ?") == "Quels événements sont prévus en octobre ?: 1"
+    catalog = [
+        {
+            "metadata": {
+                "first_date": "2026-10-01",
+                "last_date": "2026-10-01",
+                "uid": "1",
+            },
+            "page_content": "événement",
+        }
+    ]
+    assert (
+        make_answerer(catalog).answer("Quels événements sont prévus en octobre ?")
+        == "Quels événements sont prévus en octobre ?: 1"
+    )
 
 
 def test_answer_returns_no_match_message() -> None:

@@ -58,7 +58,7 @@ class FaissIndexer:
 
         if not 0 <= self.chunk_overlap < self.chunk_size:
             raise ValueError(
-                "chunk_overlap doit être positif " "et inférieur à chunk_size."
+                "chunk_overlap doit être positif et inférieur à chunk_size."
             )
 
         # Initialized lazily so FastAPI can start without requiring
@@ -86,7 +86,7 @@ class FaissIndexer:
 
         if not api_key:
             raise OSError(
-                "MISTRAL_API_KEY introuvable. " f"Vérifie le fichier : {env_path}"
+                f"MISTRAL_API_KEY introuvable. Vérifie le fichier : {env_path}"
             )
 
         self._embeddings = MistralAIEmbeddings(

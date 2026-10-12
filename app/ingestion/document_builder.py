@@ -142,7 +142,7 @@ class DocumentBuilder:
 
         if use_summarization and summarizer is None:
             raise ValueError(
-                "Un EventSummarizer doit être fourni " "si use_summarization=True."
+                "Un EventSummarizer doit être fourni si use_summarization=True."
             )
 
     @staticmethod
@@ -403,7 +403,7 @@ class DocumentBuilder:
             logger.warning("Résumé vide : utilisation du texte nettoyé.")
 
         except Exception:
-            logger.exception("Échec du résumé LLM : " "utilisation du texte nettoyé.")
+            logger.exception("Échec du résumé LLM : utilisation du texte nettoyé.")
 
         return cleaned_content
 

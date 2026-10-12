@@ -10,9 +10,11 @@ def parser() -> QueryParser:
     return QueryParser()
 
 
-def test_parser_extracts_month_price_audience_and_semantic_query(parser: QueryParser) -> None:
+def test_parser_extracts_month_price_audience_and_semantic_query(
+    parser: QueryParser,
+) -> None:
     criteria = parser.parse(
-        "Quelles activités autour de la céramique sont prévues en octobre pour les enfants à moins de 10 € ?",
+        "Quelles activités autour de la céramique sont prévues en octobre pour les enfants à moins de 10 € ?",  # noqa: E501
         today=date(2026, 9, 30),
     )
     assert criteria.period == (date(2026, 10, 1), date(2026, 10, 31))
@@ -25,22 +27,26 @@ def test_parser_extracts_month_price_audience_and_semantic_query(parser: QueryPa
 def test_parser_handles_next_month_and_current_month(parser: QueryParser) -> None:
     today = date(2026, 12, 15)
     assert parser.parse("événements le mois prochain", today).period == (
-        date(2027, 1, 1), date(2027, 1, 31)
+        date(2027, 1, 1),
+        date(2027, 1, 31),
     )
     assert parser.parse("événements ce mois-ci", today).period == (
-        date(2026, 12, 1), date(2026, 12, 31)
+        date(2026, 12, 1),
+        date(2026, 12, 31),
     )
 
 
 def test_parser_assigns_past_month_to_next_year(parser: QueryParser) -> None:
     assert parser.parse("sorties en janvier", date(2026, 9, 30)).period == (
-        date(2027, 1, 1), date(2027, 1, 31)
+        date(2027, 1, 1),
+        date(2027, 1, 31),
     )
 
 
 def test_parser_accepts_explicit_year(parser: QueryParser) -> None:
     assert parser.parse("événements en août 2026", date(2027, 1, 1)).period == (
-        date(2026, 8, 1), date(2026, 8, 31)
+        date(2026, 8, 1),
+        date(2026, 8, 31),
     )
 
 
@@ -86,8 +92,13 @@ def test_parser_detects_accessibility(parser: QueryParser) -> None:
     assert criteria.accessibility_requested
 
 
-def test_parser_returns_empty_semantic_query_for_generic_request(parser: QueryParser) -> None:
-    assert parser.parse("Quels événements sont prévus en octobre à Pau?").semantic_query == ""
+def test_parser_returns_empty_semantic_query_for_generic_request(
+    parser: QueryParser,
+) -> None:
+    assert (
+        parser.parse("Quels événements sont prévus en octobre à Pau?").semantic_query
+        == ""
+    )
 
 
 def test_parser_rejects_empty_question(parser: QueryParser) -> None:

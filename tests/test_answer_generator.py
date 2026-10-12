@@ -5,7 +5,9 @@ from app.infrastructure.rag.answer_generator import AnswerGenerator
 
 def test_generate_returns_no_result_message_without_calling_model(monkeypatch) -> None:
     generator = object.__new__(AnswerGenerator)
-    generator._chain = SimpleNamespace(invoke=lambda _: (_ for _ in ()).throw(AssertionError()))
+    generator._chain = SimpleNamespace(
+        invoke=lambda _: (_ for _ in ()).throw(AssertionError())
+    )
     result = generator.generate("question", [])
     assert "pas trouvé" in result
 

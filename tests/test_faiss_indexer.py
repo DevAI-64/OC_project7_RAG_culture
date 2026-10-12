@@ -26,7 +26,9 @@ def test_split_text_handles_empty_short_and_long_text(tmp_path: Path) -> None:
 def test_load_documents_supports_wrapped_and_list_formats(tmp_path: Path) -> None:
     path = tmp_path / "docs.json"
     indexer = FaissIndexer(tmp_path)
-    path.write_text(json.dumps({"documents": [{"page_content": "A"}]}), encoding="utf-8")
+    path.write_text(
+        json.dumps({"documents": [{"page_content": "A"}]}), encoding="utf-8"
+    )
     assert len(indexer._load_documents(path)) == 1
     path.write_text(json.dumps([{"page_content": "B"}]), encoding="utf-8")
     assert indexer._load_documents(path)[0]["page_content"] == "B"
@@ -40,7 +42,9 @@ def test_load_documents_supports_wrapped_and_list_formats(tmp_path: Path) -> Non
         indexer._load_documents(tmp_path / "missing.json")
 
 
-def test_build_documents_skips_invalid_entries_and_adds_chunk_metadata(tmp_path: Path) -> None:
+def test_build_documents_skips_invalid_entries_and_adds_chunk_metadata(
+    tmp_path: Path,
+) -> None:
     indexer = FaissIndexer(tmp_path, chunk_size=5, chunk_overlap=1)
     raw = [
         "invalid",

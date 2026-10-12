@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pytest
 
 pytestmark = pytest.mark.usefixtures("dummy_mistral_key")
@@ -12,6 +10,7 @@ def dummy_mistral_key(monkeypatch):
 
 def import_main():
     import importlib
+
     return importlib.import_module("app.main")
 
 
@@ -67,17 +66,29 @@ def test_chat_success(monkeypatch) -> None:
 
 def test_chat_maps_known_errors(monkeypatch) -> None:
     main = import_main()
-    monkeypatch.setattr(main.ask_question_use_case, "execute", lambda _: (_ for _ in ()).throw(ValueError("bad")))
+    monkeypatch.setattr(
+        main.ask_question_use_case,
+        "execute",
+        lambda _: (_ for _ in ()).throw(ValueError("bad")),
+    )
     with pytest.raises(main.HTTPException) as exc:
         main.chat(main.ChatRequest(question="Question"))
     assert exc.value.status_code == 422
 
-    monkeypatch.setattr(main.ask_question_use_case, "execute", lambda _: (_ for _ in ()).throw(RuntimeError("down")))
+    monkeypatch.setattr(
+        main.ask_question_use_case,
+        "execute",
+        lambda _: (_ for _ in ()).throw(RuntimeError("down")),
+    )
     with pytest.raises(main.HTTPException) as exc:
         main.chat(main.ChatRequest(question="Question"))
     assert exc.value.status_code == 503
 
-    monkeypatch.setattr(main.ask_question_use_case, "execute", lambda _: (_ for _ in ()).throw(Exception("boom")))
+    monkeypatch.setattr(
+        main.ask_question_use_case,
+        "execute",
+        lambda _: (_ for _ in ()).throw(Exception("boom")),
+    )
     with pytest.raises(main.HTTPException) as exc:
         main.chat(main.ChatRequest(question="Question"))
     assert exc.value.status_code == 500
@@ -88,11 +99,15 @@ def test_rebuild_publishes_new_state(monkeypatch, tmp_path) -> None:
     processed = tmp_path / "documents.json"
     processed.write_text("{}", encoding="utf-8")
 
-    monkeypatch.setattr(main.ingestion_pipeline, "run", lambda: {"processed_path": str(processed)})
+    monkeypatch.setattr(
+        main.ingestion_pipeline, "run", lambda: {"processed_path": str(processed)}
+    )
     monkeypatch.setattr(main.faiss_indexer, "rebuild", lambda documents_path: 12)
     monkeypatch.setattr(main, "_load_vector_store", lambda: "new-store")
     monkeypatch.setattr(main.event_catalog_repository, "load", lambda path: None)
-    monkeypatch.setattr(main.event_catalog_repository, "all", lambda: [{"metadata": {"uid": "1"}}])
+    monkeypatch.setattr(
+        main.event_catalog_repository, "all", lambda: [{"metadata": {"uid": "1"}}]
+    )
 
     result = main.rebuild_index()
     assert result["status"] == "ok"
@@ -103,7 +118,11 @@ def test_rebuild_publishes_new_state(monkeypatch, tmp_path) -> None:
 
 def test_rebuild_returns_http_error_on_failure(monkeypatch) -> None:
     main = import_main()
-    monkeypatch.setattr(main.ingestion_pipeline, "run", lambda: (_ for _ in ()).throw(RuntimeError("boom")))
+    monkeypatch.setattr(
+        main.ingestion_pipeline,
+        "run",
+        lambda: (_ for _ in ()).throw(RuntimeError("boom")),
+    )
     with pytest.raises(main.HTTPException) as exc:
         main.rebuild_index()
     assert exc.value.status_code == 500

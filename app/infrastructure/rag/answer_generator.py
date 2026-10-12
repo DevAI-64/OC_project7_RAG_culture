@@ -104,7 +104,8 @@ class AnswerGenerator:
         for index, (document, _score) in enumerate(results, start=1):
             metadata = document.metadata
 
-            context_parts.append(f"""Événement {index}
+            context_parts.append(
+                f"""Événement {index}
 Titre et description :
 {document.page_content}
 
@@ -114,15 +115,13 @@ Informations structurées :
 - Début : {metadata.get("first_date", "Non renseigné")}
 - Fin : {metadata.get("last_date", "Non renseignée")}
 - Tarif : {metadata.get("conditions", "Non renseigné")}
-- Public : {
-    ", ".join(metadata.get("audience_categories", []))
-    or "Non renseigné"
-}
+- Public : {", ".join(metadata.get("audience_categories", [])) or "Non renseigné"}
 - Accessibilité : {
-    metadata.get("accessibility_label")
-    or metadata.get("accessibility")
-    or "Non renseignée"
-}
-- URL : {metadata.get("url", "Non renseignée")}""".strip())
+                    metadata.get("accessibility_label")
+                    or metadata.get("accessibility")
+                    or "Non renseignée"
+                }
+- URL : {metadata.get("url", "Non renseignée")}""".strip()
+            )
 
         return "\n\n---\n\n".join(context_parts)

@@ -56,4 +56,6 @@ def test_deduplicate_and_extract_uids() -> None:
         (Document(page_content="B", metadata={"uid": "2"}), 3.0),
     ]
     assert EventRetriever._extract_uids([{"metadata": {"uid": "1"}}]) == {"1"}
-    assert [doc.page_content for doc, _ in EventRetriever._deduplicate(candidates, 2)] == ["A", "B"]
+    assert [
+        doc.page_content for doc, _ in EventRetriever._deduplicate(candidates, 2)
+    ] == ["A", "B"]

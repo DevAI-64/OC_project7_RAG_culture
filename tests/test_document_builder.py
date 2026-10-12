@@ -1,5 +1,3 @@
-from datetime import date
-
 import pytest
 
 from app.domain.event import Event
@@ -17,7 +15,10 @@ def test_text_helpers_and_classification() -> None:
     assert builder._normalize("  Bonjour   MONDE ") == "bonjour monde"
     assert builder._unique(["a", "b", "a"]) == ["a", "b"]
     assert builder._matches_any("atelier enfant", [r"enfant"])
-    assert builder._classify_audience("atelier pour enfants et familles") == ["enfants", "familles"]
+    assert builder._classify_audience("atelier pour enfants et familles") == [
+        "enfants",
+        "familles",
+    ]
 
 
 @pytest.mark.parametrize(
@@ -88,8 +89,14 @@ def test_builder_falls_back_when_summary_is_empty_or_fails(sample_event: Event) 
             raise RuntimeError("LLM indisponible")
 
     cleaned = DocumentBuilder()._build_cleaned_content(sample_event)
-    assert DocumentBuilder(EmptySummarizer(), True)._build_embedding_content(cleaned) == cleaned
-    assert DocumentBuilder(FailingSummarizer(), True)._build_embedding_content(cleaned) == cleaned
+    assert (
+        DocumentBuilder(EmptySummarizer(), True)._build_embedding_content(cleaned)
+        == cleaned
+    )
+    assert (
+        DocumentBuilder(FailingSummarizer(), True)._build_embedding_content(cleaned)
+        == cleaned
+    )
 
 
 def test_builder_uses_summary_when_available(sample_event: Event) -> None:

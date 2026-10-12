@@ -21,7 +21,10 @@ def test_json_snapshot_repository_removes_temp_file_after_replace_failure(
     repository = JsonSnapshotRepository()
     path = tmp_path / "snapshot.json"
 
-    monkeypatch.setattr("app.repositories.json_snapshot_repository.os.replace", lambda *_: (_ for _ in ()).throw(OSError("boom")))
+    monkeypatch.setattr(
+        "app.repositories.json_snapshot_repository.os.replace",
+        lambda *_: (_ for _ in ()).throw(OSError("boom")),
+    )
     with pytest.raises(OSError):
         repository.save(path, {"ok": True})
     assert list(tmp_path.glob("*.tmp")) == []
@@ -29,7 +32,9 @@ def test_json_snapshot_repository_removes_temp_file_after_replace_failure(
 
 def test_catalog_repository_loads_wrapped_and_list_formats(tmp_path: Path) -> None:
     path = tmp_path / "events.json"
-    path.write_text(json.dumps({"documents": [{"id": "1"}, "ignored"]}), encoding="utf-8")
+    path.write_text(
+        json.dumps({"documents": [{"id": "1"}, "ignored"]}), encoding="utf-8"
+    )
     repo = EventCatalogRepository(tmp_path)
     repo.load(path)
     assert repo.all() == [{"id": "1"}]

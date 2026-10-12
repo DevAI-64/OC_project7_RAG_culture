@@ -37,7 +37,10 @@ def test_explicit_period_can_target_past_events() -> None:
 
 def test_filter_rejects_invalid_dates() -> None:
     criteria = QueryCriteria()
-    assert EventFilter().filter([document(last_date="bad")], criteria, date(2026, 9, 30)) == []
+    assert (
+        EventFilter().filter([document(last_date="bad")], criteria, date(2026, 9, 30))
+        == []
+    )
 
 
 def test_price_filter_handles_free_amounts_and_unknown() -> None:

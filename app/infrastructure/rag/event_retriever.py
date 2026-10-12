@@ -47,7 +47,7 @@ class EventRetriever:
             question,
             k=total,
             fetch_k=total,
-            filter=lambda metadata: (str(metadata.get("uid")) in allowed_uids),
+            filter=lambda metadata: str(metadata.get("uid")) in allowed_uids,
         )
 
         return self._deduplicate(

@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "description": "Questions annotées pour évaluer la recherche sémantique sur les 18 événements synthétiques. Les identifiants attendus sont des jugements de pertinence de référence, indépendants du classement renvoyé par FAISS.",
+  "reference_date": "2026-10-12",
+  "k": 5,
+  "questions": [
+    {
+      "id": "photo_octobre",
+      "question": "Quels événements liés à la photographie sont prévus en octobre ?",
+      "expected_ids": ["TEST004", "TEST007"]
+    },
+    {
+      "id": "ceramique_octobre",
+      "question": "Quels ateliers de céramique et de poterie sont prévus en octobre ?",
+      "expected_ids": ["TEST001", "TEST002", "TEST003", "TEST015"]
+    },
+    {
+      "id": "enfants_novembre",
+      "question": "Quels événements sont proposés aux enfants en novembre ?",
+      "expected_ids": ["TEST006", "TEST016"]
+    },
+    {
+      "id": "enfants_budget",
+      "question": "Quelles activités pour enfants coûtent moins de 10 euros ?",
+      "expected_ids": ["TEST001", "TEST002", "TEST006", "TEST009", "TEST016"]
+    },
+    {
+      "id": "accessibilite_pmr",
+      "question": "Quelles activités sont accessibles aux personnes à mobilité réduite ?",
+      "expected_ids": ["TEST013"]
+    },
+    {
+      "id": "jeu_go",
+      "question": "Où puis-je découvrir le jeu de Go et apprendre ses règles ?",
+      "expected_ids": ["TEST005"]
+    },
+    {
+      "id": "histoire_bearn",
+      "question": "Y a-t-il des événements sur l'histoire du Béarn en novembre ?",
+      "expected_ids": ["TEST012"]
+    },
+    {
+      "id": "concert_jazz",
+      "question": "Quels concerts de jazz sont prévus en octobre ?",
+      "expected_ids": ["TEST010"]
+    },
+    {
+      "id": "python_ados",
+      "question": "Où apprendre la programmation Python pour les ados en novembre ?",
+      "expected_ids": ["TEST011"]
+    },
+    {
+      "id": "sortie_oiseaux_famille",
+      "question": "Je cherche une sortie nature pour observer les oiseaux en famille.",
+      "expected_ids": ["TEST009"]
+    },
+    {
+      "id": "marionnettes_tout_petits",
+      "question": "Je cherche un spectacle de marionnettes adapté aux tout-petits.",
+      "expected_ids": ["TEST016"]
+    },
+    {
+      "id": "cuisine_bearnaise",
+      "question": "Où participer à un atelier de cuisine traditionnelle béarnaise ?",
+      "expected_ids": ["TEST017"]
+    },
+    {
+      "id": "aquarelle_adultes",
+      "question": "Où suivre un cours d'aquarelle pour adultes en octobre ?",
+      "expected_ids": ["TEST008"]
+    },
+    {
+      "id": "exposition_pau",
+      "question": "Je voudrais visiter une exposition de photographies sur Pau.",
+      "expected_ids": ["TEST004"]
+    },
+    {
+      "id": "atelier_adultes_novembre",
+      "question": "Quels ateliers sont proposés aux adultes en novembre ?",
+      "expected_ids": ["TEST013", "TEST015", "TEST017"]
+    }
+  ]
+}

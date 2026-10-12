@@ -351,7 +351,7 @@ def rebuild_index() -> dict[str, Any]:
 
         raise HTTPException(
             status_code=500,
-            detail=(f"Échec de /rebuild : " f"{type(error).__name__}: {error}"),
+            detail=(f"Échec de /rebuild : {type(error).__name__}: {error}"),
         ) from error
 
 

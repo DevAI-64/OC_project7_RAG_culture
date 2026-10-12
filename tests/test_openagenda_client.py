@@ -7,7 +7,7 @@ from app.ingestion.openagenda_client import OpenAgendaClient
 def test_build_where_clause() -> None:
     client = OpenAgendaClient(city="Pau")
     assert client._build_where_clause(date(2025, 10, 1)) == (
-        'location_city = "Pau" AND lastdate_begin >= date\'2025-10-01\''
+        "location_city = \"Pau\" AND lastdate_begin >= date'2025-10-01'"
     )
 
 
@@ -38,7 +38,9 @@ def test_fetch_events_paginates_until_total_count(monkeypatch) -> None:
         def get(self, *args, **kwargs):
             return responses.pop(0)
 
-    monkeypatch.setattr(OpenAgendaClient, "_create_session", staticmethod(lambda: Session()))
+    monkeypatch.setattr(
+        OpenAgendaClient, "_create_session", staticmethod(lambda: Session())
+    )
     result = OpenAgendaClient(page_size=1).fetch_events()
     assert result["metadata"]["count"] == 2
     assert [item["uid"] for item in result["events"]] == ["1", "2"]
@@ -58,5 +60,7 @@ def test_fetch_events_stops_on_empty_page(monkeypatch) -> None:
                 json=lambda: {"total_count": None, "results": []},
             )
 
-    monkeypatch.setattr(OpenAgendaClient, "_create_session", staticmethod(lambda: Session()))
+    monkeypatch.setattr(
+        OpenAgendaClient, "_create_session", staticmethod(lambda: Session())
+    )
     assert OpenAgendaClient().fetch_events()["events"] == []
